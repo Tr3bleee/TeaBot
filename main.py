@@ -70,34 +70,7 @@ async def buy_handler(message: Message):
     tea_count[user_id] -= tea_price
     await message.reply(f"Вы купили {tea_choice} за {tea_price} чашек. У вас осталось {tea_count[user_id]} чашек.")
     print(f"{user_name} купил {tea_choice} чай за {tea_price} чашек чая. Осталось чашек чая: {tea_count[user_id]}")
-
-
-dp.message_handler(commands=["choose"])
-
-
-async def choose_handler(message: Message):
-    user_id = message.from_user.id
-    user_name = message.from_user.full_name
-    tea_choice = message.get_args()
-
-    if not tea_choice:
-        await message.reply("Пожалуйста, укажите название сорта чая.")
-        return
-
-    if tea_choice not in tea_shop:
-        await message.reply(f"Извините, но у нас нет такого сорта как {tea_choice}.")
-        return
-
-    if user_id in user_purchases and tea_choice not in user_purchases[user_id]:
-        await message.reply(f"Извините, но вы еще не купили {tea_choice}.")
-        return
-
-    if user_id not in user_purchases:
-        user_purchases[user_id] = [tea_choice]
-
-    user_tea[user_id] = tea_choice
-    await message.reply(
-        f"Вы выбрали {tea_choice}. Теперь каждый раз когда вы выпьете чашку этого сорта командой /tea вы получите соответствующее количество чашек.")
+    
 
 @dp.message_handler(commands=["tea"])
 async def tea_handler(message: Message):
